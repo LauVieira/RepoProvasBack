@@ -27,7 +27,19 @@ async function getSubjectsByTeacher (req, res) {
     }
 }
 
+async function getTeachersAndExams (req, res) {
+    try {
+        const teachersList = await teachersRepository.getTeachersWithCounter();
+        res.status(200).send(teachersList);
+    }
+    catch {
+        res.sendStatus(500);
+    }
+    
+}
+
 module.exports = {
     getTeachers,
-    getSubjectsByTeacher
+    getSubjectsByTeacher,
+    getTeachersAndExams
 }

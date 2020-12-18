@@ -6,9 +6,9 @@ async function cleanDB () {
     connection.query('DELETE FROM exams');
 }
 
-beforeAll(cleanDB);
+//beforeAll(cleanDB);
 afterAll( async () => {
-    await cleanDB();
+    //await cleanDB();
     connection.end();
 });
 
