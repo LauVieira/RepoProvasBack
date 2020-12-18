@@ -11,6 +11,13 @@ async function getSubjectsWithCount () {
     return subjectsList.rows;
 }
 
+async function subjectOrTeacherInvalid (teacherId, subjectId) {
+    const queryString = 'SELECT * FROM subjects_teachers WHERE "teacherId" = $1 AND "subjectId" = $2';
+    const validation = await connection.query(queryString, [teacherId, subjectId]);
+    return validation.rows.length === 0;
+}
+
 module.exports = {
-    getSubjectsWithCount
+    getSubjectsWithCount,
+    subjectOrTeacherInvalid
 }

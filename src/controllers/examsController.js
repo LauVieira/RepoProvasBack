@@ -1,4 +1,5 @@
 const examsRepository = require('../repositories/examsRepository');
+const subjectsRepository = require('../repositories/subjectsRepository');
 const examsSchema = require('../schemas/examsSchema');
 
 async function postExam (req, res) {
@@ -11,8 +12,9 @@ async function postExam (req, res) {
         subjectId: parseInt(subjectId)
     };    
 
+    const teacherSubjectNotRelated = await subjectsRepository.subjectOrTeacherInvalid(teacherId, subjectId);
     const { error } = examsSchema.postExam.validate(newExam);
-    if (error) return res.sendStatus(422);
+    if (error || teacherSubjectNotRelated) return res.sendStatus(422);
 
     try {
         await examsRepository.postNewExam(newExam);
