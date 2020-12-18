@@ -37,7 +37,22 @@ async function examsByTeacher (req, res) {
     }
 }
 
+async function examsBySubject (req, res) {
+    const subjectId = parseInt(req.params.subjectId);
+
+    if (subjectId < 1 || subjectId > 59) return res.sendStatus(422);
+
+    try {
+        const examsList = await examsRepository.getBySubjectId(subjectId);
+        return res.status(200).send(examsList);
+    }
+    catch {
+        return res.sendStatus(500);
+    }
+}
+
 module.exports = {
     postExam,
-    examsByTeacher
+    examsByTeacher,
+    examsBySubject
 }

@@ -29,13 +29,12 @@ async function getSubjectsByTeacher (req, res) {
 
 async function getTeachersAndExams (req, res) {
     try {
-        const teachersList = await teachersRepository.getTeachersWithCounter();
+        const teachersList = await teachersRepository.getTeachersWithCount();
         res.status(200).send(teachersList);
     }
     catch {
         res.sendStatus(500);
-    }
-    
+    } 
 }
 
 module.exports = {
