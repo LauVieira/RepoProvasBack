@@ -1,7 +1,6 @@
 const examsRepository = require('../repositories/examsRepository');
 const examsSchema = require('../schemas/examsSchema');
 
-// no front: axios.post(`http://localhost:3000/api/exams/${teacherId}/${subjectId}`, { name, url, type });
 async function postExam (req, res) {
     const { teacherId, subjectId } = req.params;
     const newExam = { 
@@ -24,6 +23,21 @@ async function postExam (req, res) {
     }
 }
 
+async function examsByTeacher (req, res) {
+    const teacherId = parseInt(req.params.teacherId);
+
+    if (teacherId < 1 || teacherId > 20) return res.sendStatus(422);
+
+    try {
+        const examsList = await examsRepository.getByTeacherId(teacherId);
+        return res.status(200).send(examsList);
+    }
+    catch {
+        return res.sendStatus(500);
+    }
+}
+
 module.exports = {
-    postExam
+    postExam,
+    examsByTeacher
 }
