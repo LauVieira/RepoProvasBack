@@ -20,5 +20,3 @@ app.get('/api/exams/subject/:subjectId', examsController.examsBySubject);
 app.get('/api/subjects/exams', subjectsController.getSubjectsAndExams);
 
 module.exports = app;
-
-
