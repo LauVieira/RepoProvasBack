@@ -1,5 +1,4 @@
 const teachersRepository = require('../repositories/teachersRepository');
-const subjectsRepository = require('../repositories/subjectsRepository');
 
 async function getTeachers (req, res) {
     try {
@@ -13,7 +12,9 @@ async function getTeachers (req, res) {
 }
 
 async function getSubjectsByTeacher (req, res) {
-    const teacherId = req.params.id;
+    const teacherId = parseInt(req.params.id);
+
+    if (teacherId < 1 || teacherId > 20) return res.sendStatus(422);
 
     try {
         const subjectsByTeacher = await teachersRepository.getTeacherSubjects(teacherId);
