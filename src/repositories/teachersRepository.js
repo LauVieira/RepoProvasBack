@@ -16,7 +16,7 @@ async function getTeacherSubjects (teacherId) {
     return subjectsList.rows;
 }
 
-async function getTeachersWithCounter () {
+async function getTeachersWithCount () {
     const queryString = `
         SELECT teachers.name, teachers.id, COUNT(exams."teacherId") 
         FROM teachers LEFT JOIN exams ON teachers.id = exams."teacherId" 
@@ -30,5 +30,5 @@ async function getTeachersWithCounter () {
 module.exports = {
     getAllTeachers,
     getTeacherSubjects,
-    getTeachersWithCounter
+    getTeachersWithCount
 }

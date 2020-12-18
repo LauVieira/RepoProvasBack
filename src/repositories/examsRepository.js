@@ -21,7 +21,19 @@ async function getByTeacherId (teacherId) {
     return examsByTeacher.rows;
 }
 
+async function getBySubjectId (subjectId) {
+    const queryString = `
+        SELECT exams.name, exams.type, exams.url, teachers.name AS teacher
+        FROM subjects JOIN exams ON subjects.id = exams."subjectId"
+        JOIN teachers ON exams."teacherId" = teachers.id
+        WHERE subjects.id = $1
+    `;
+    const examsBySubject = await connection.query(queryString, [subjectId]);
+    return examsBySubject.rows;
+}
+
 module.exports = {
     postNewExam,
-    getByTeacherId
+    getByTeacherId,
+    getBySubjectId
 }
